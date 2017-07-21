@@ -1,0 +1,46 @@
+﻿<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>Contact Manager :: Assignment</title>
+    {% load staticfiles %}
+    <link rel="stylesheet" type="text/css" href="{% static 'ContactManagerApp/vendor_css/salesforce-lightning-design-system.css' %}" />
+</head>
+<body>
+    <form class="form_css">
+    {% csrf_token %}
+        
+        <div class=" slds-grid slds-wrap slds-m-horizontal_large">
+            <fieldset class="slds-box slds-theme--default slds-container" style="width: 100%;margin-top:-10px;margin-bottom:20px">
+                <legend class="slds-text-heading--medium slds-p-vertical--medium">Contact</legend>
+                <div class="slds-section" style="margin-top: -20px;">
+                    <div class="slds-grid slds-wrap slds-grid--pull-padded" role="main" style="width:100%">
+                        <div class="slds-form-element slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-2" style="padding:10px">
+                            <label class="slds-form-element__label" for="input-01">First Name</label>
+                            <input type="text" id="firstsName" name="FirstName" value="{{c_form.FirstName.value|default_if_none:""}}" class="slds-input" placeholder="First Name" />
+                        </div>
+                        <div class="slds-form-element slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-2" style="padding:10px">
+                            <label class="slds-form-element__label" for="input-02">Last Name</label>
+                            <input type="text" id="lastName" name="LastName" value="{{c_form.LastName.value|default_if_none:""}}" class="slds-input" placeholder="Last Name" />
+                        </div>
+                        <div class="slds-form-element slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-2" style="padding:10px">
+                            <label class="slds-form-element__label" for="input-06">Email</label>
+                            <input type="email" id="email" name="Email" value="{{c_form.Email.value|default_if_none:""}}" class="slds-input" placeholder="Email" />
+                        </div>
+                        <div class="slds-form-element slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-2" style="padding:10px">
+                            <label class="slds-form-element__label" for="input-06">Mobile</label>
+                            <input type="text" id="mobile" name="MobileNo" value="{{c_form.MobileNo.value|default_if_none:""}}" class="slds-input" placeholder="Mobile" />
+                        </div>                       
+                     </div>
+                     <div class="slds-text-align--center" role="main" style="width:100%">
+                        <div class="slds-form-element">
+                            <button class="slds-button slds-button_brand" type="submit" formaction="" formmethod="post">Save</button>            
+                            <button class="slds-button slds-button_neutral">Cancel</button>
+                        </div> 
+                    </div>
+                </div>
+            </fieldset> 
+        </div>
+    </form>
+</body>
+</html>

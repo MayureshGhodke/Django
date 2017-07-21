@@ -1,0 +1,111 @@
+{% extends 'ContactManagerApp/layout.html' %}
+ {% block content %}
+<script>
+    function deleteContact(id) {
+        if (confirm("Are you sure to delete")) {
+            document.getElementById("myForm").action = "/DeleteContact/" + id;
+            document.getElementById("myForm").submit();
+        }
+    }
+    function searchContact(searchWord) {
+        setTimeout(function () {
+            document.getElementById("myForm").action = "/searchContact/" + searchWord.value;
+            document.getElementById("myForm").submit();
+        }, 3000);
+       
+    }
+</script>
+<div class="slds-page-header slds-size--1-of-1 slds-medium-size--1-of-1 slds-large-size--1-of-1 mobileMargin ">
+    <div class="slds-media slds-no-space slds-grow">
+        <div class="slds-media__figure">
+            <img src="static/ContactManagerApp/application_img/icons/logo.png" alt="Logo" height="40" width="40" />
+        </div>
+        <div class="slds-media__body">
+            <h1 class="slds-page-header__title slds-m-right--small slds-align-middle slds-truncate" title="Contact Manager">Contact Manager</h1>
+        </div>
+    </div>
+</div>
+<br />
+<form id="myForm">
+     {% csrf_token %}
+    <div class=" slds-grid slds-wrap slds-m-horizontal_large">
+        <div class="slds-grid slds-wrap slds-grid--pull-padded" role="main" style="width:100%">        
+            <div class="slds-form-element slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-2" style="padding:10px">
+                <div class="slds-button-group" role="group">
+                  <input type="text" id="serachInput" name="search" class="slds-input" placeholder="Search Contact" onkeypress="searchContact(search)" formmethod="get" style="border-radius: 0.25rem 0rem 0rem 0.25rem;" />
+                  <button class="slds-button slds-button_neutral">Search</button>
+                </div>
+            </div>
+            <div class="slds-form-element slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-2" style="padding:10px">
+                <button formaction="/AddContact" class="slds-button slds-button_brand">Add New Contact</button>
+            </div>       
+        </div>
+    </div>
+    <br />
+    <div class=" slds-grid slds-wrap slds-m-horizontal_large">
+        <fieldset class="slds-box slds-theme--default slds-container" style="width: 100%;">
+        <div class="slds-section">
+            <table class="slds-table slds-table--bordered slds-max-medium-table--stacked-horizontal">
+                <thead>
+                    <tr class="slds-text-heading--label">
+                        <th title="Action" class="slds-text-title_capsr" scope="col">
+                            <div class="slds-truncate" title="">Action</div>
+                        </th>
+                        <th title="Name" class="slds-text-title_caps" scope="col">
+                            <div class="slds-truncate" title="Name">Name</div>
+                        </th>
+                        <th title="Email" class="slds-text-title_caps" scope="col">
+                            <div class="slds-truncate" title="Email">Email</div>
+                        </th>
+                        <th title="Mobile" class="slds-text-title_caps" scope="col">
+                            <div class="slds-truncate" title="Mobile">Mobile</div>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for Item in ListOfContact %}
+                        <tr>
+                            <td scope="row" data-label="Action">
+                                <a href="/EditContact/{{Item.SerialNo}}">Edit</a> | <a href="#" onclick="deleteContact('{{Item.SerialNo}}')">Delete</a>
+                                <!--<button type="submit" formmethod="get" formaction="/EditContact/{{Item.SerialNo}}" class="EditImage"></button> 
+                                <button type="submit" formmethod="get" onclick="deleteContact('{{Item.SerialNo}}')" class="DeleteImage"></button>-->
+                            </td>
+                            <td scope="row" data-label="Name">
+                                {{Item.FirstName}} {{Item.LastName}}
+                            </td>
+                            <td scope="row" data-label="Email">
+                                {{Item.Email}}
+                            </td>
+                            <td scope="row" data-label="Mobile">
+                                {{Item.MobileNo}}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>        
+        </div>
+        </fieldset> 
+    </div>
+</form>
+<!--<div class="demo-only" style="height: 640px;">
+  <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+    <div class="slds-modal__container">
+      <header class="slds-modal__header">
+        <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close">
+            <img src="static/ContactManagerApp/application_img/icons/close.png" alt="Logo" height="15" width="15" />  
+            <span class="slds-assistive-text">Close</span>
+        </button>
+        <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Delete Contact</h2>
+      </header>
+      <div class="slds-modal__content slds-p-around_medium slds-text-align_center" id="modal-content-id-1">
+        <h1>Are you sure to delete ?</h1>
+      </div>
+      <footer class="slds-modal__footer slds-text-align_center">        
+        <button class="slds-button slds-button_brand">Yes</button>
+        <button class="slds-button slds-button_neutral">No</button>
+      </footer>
+    </div>
+  </section>
+  <div class="slds-backdrop slds-backdrop_open"></div>
+</div>-->
+{% endblock %}
